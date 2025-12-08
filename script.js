@@ -1,10 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+// ⚠️ WARNING: THIS KEY IS PUBLICLY VISIBLE. 
 // --- PASTE YOUR KEY HERE ---
-const SITE_API_KEY = "AIzaSyC5Rc5lbdbYuQKRwPzAts5S09eRL6eex7w"; 
+const SITE_API_KEY = "AIzaSyBJzNK3wElCfWy1KWl2xSEY8eOUcHtLj8A"; 
 // ---------------------------
 
-let editor; // Global variable for the Monaco editor instance
+let editor; 
 
 // --- 1. INITIALIZE MONACO EDITOR ---
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
@@ -14,7 +15,7 @@ require(['vs/editor/editor.main'], function() {
         language: 'javascript',
         theme: 'vs-dark',
         minimap: { enabled: false },
-        automaticLayout: true // Crucial for resizing
+        automaticLayout: true
     });
 });
 
@@ -81,9 +82,8 @@ runButton.addEventListener('click', runCode);
 
 // Add Ctrl+Enter binding to the editor
 document.addEventListener('keydown', function(event) {
-    // Check if the editor exists and if Ctrl/Cmd + Enter is pressed
     if (editor && (event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-        event.preventDefault(); // Stop default behavior
+        event.preventDefault(); 
         runCode();
     }
 });
@@ -105,14 +105,13 @@ function runCode() {
     // Clear the terminal's prompt area
     term.write('\r');
     
-    // ⚠️ Overriding console.log temporarily to print to the terminal
+    // Temporarily override console.log to print output to the terminal
     const originalLog = console.log;
     console.log = function(...args) {
         term.writeln(args.map(a => String(a)).join(' '));
     };
 
     try {
-        // Execute the code using new Function, which is safer than eval for blocks
         new Function(code)();
     } catch (error) {
         term.writeln(`\x1b[31mCode Error: ${error.message}\x1b[0m`);
@@ -140,7 +139,7 @@ async function processTerminalCommand(input) {
         return;
     }
 
-    // If it's not AI or clear, assume it's simple JS command execution for convenience
+    // Treat simple terminal commands as JS for convenience
      try {
         const result = eval(command);
         if (result !== undefined) {
