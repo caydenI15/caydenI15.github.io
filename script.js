@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // ⚠️ WARNING: THIS KEY IS PUBLICLY VISIBLE. 
 // --- PASTE YOUR KEY HERE ---
-const SITE_API_KEY = "PASTE_YOUR_GOOGLE_API_KEY_HERE"; 
+const SITE_API_KEY = "AIzaSyAgJpG8duJZlMqmsdE5SoYV7PmVob05_2U"; 
 // ---------------------------
 
 let editor; 
