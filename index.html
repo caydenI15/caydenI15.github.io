@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini AI Terminal</title>
+    <title>Cayden's AI Editor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div id="terminal"></div>
+    <div class="main-container">
+        <div id="editor-container">
+            <div id="editor"></div>
+            <button id="run-button">▶ Run Code (Ctrl+Enter)</button>
+        </div>
+
+        <div id="terminal-container">
+            <div id="terminal"></div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.min.js"></script>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+
     <script type="importmap">
       {
         "imports": {
