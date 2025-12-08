@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // ⚠️ WARNING: THIS KEY IS PUBLICLY VISIBLE. 
 // --- PASTE YOUR KEY HERE ---
-const SITE_API_KEY = "AIzaSyBJzNK3wElCfWy1KWl2xSEY8eOUcHtLj8A"; 
+const SITE_API_KEY = "PASTE_YOUR_GOOGLE_API_KEY_HERE"; 
 // ---------------------------
 
 let editor; 
@@ -40,12 +40,13 @@ window.addEventListener('resize', () => fitAddon.fit());
 
 // --- 3. TERMINAL AND AI SETUP ---
 const genAI = new GoogleGenerativeAI(SITE_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+// Using the recommended "gemini-2.5-flash" model
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); 
 
 let currentLine = '';
 
 // Initial welcome message
-term.writeln('System Initialized.');
+term.writeln('System Initialized. Running on \x1b[1;36mGemini 2.5 Flash\x1b[0m.');
 term.writeln('----------------------------------------');
 term.writeln('Commands in Terminal: \x1b[1;33mai "prompt"\x1b[0m');
 term.writeln('Code in Editor: \x1b[1;36mPress RUN or Ctrl+Enter\x1b[0m');
@@ -101,11 +102,8 @@ function runCode() {
     const code = editor.getValue();
     
     term.writeln('\r\n\x1b[34m[Code Run]\x1b[0m');
-    
-    // Clear the terminal's prompt area
     term.write('\r');
     
-    // Temporarily override console.log to print output to the terminal
     const originalLog = console.log;
     console.log = function(...args) {
         term.writeln(args.map(a => String(a)).join(' '));
@@ -116,7 +114,6 @@ function runCode() {
     } catch (error) {
         term.writeln(`\x1b[31mCode Error: ${error.message}\x1b[0m`);
     } finally {
-        // Restore console.log
         console.log = originalLog;
         prompt();
     }
