@@ -1,9 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // ⚠️ WARNING: THIS KEY IS PUBLICLY VISIBLE. 
-// --- PASTE YOUR KEY HERE ---
+// --- PASTE YOUR KEY HERE (Ensure quotes are present!) ---
 const SITE_API_KEY = "AIzaSyAgJpG8duJZlMqmsdE5SoYV7PmVob05_2U"; 
-// ---------------------------
+// --------------------------------------------------------
 
 let editor; 
 
@@ -104,6 +104,7 @@ function runCode() {
     term.writeln('\r\n\x1b[34m[Code Run]\x1b[0m');
     term.write('\r');
     
+    // Temporarily override console.log to print output to the terminal
     const originalLog = console.log;
     console.log = function(...args) {
         term.writeln(args.map(a => String(a)).join(' '));
@@ -116,51 +117,3 @@ function runCode() {
     } finally {
         console.log = originalLog;
         prompt();
-    }
-}
-
-// Handles commands typed directly into the Terminal (for AI or 'clear')
-async function processTerminalCommand(input) {
-    const command = input.trim();
-    if (!command) { prompt(); return; }
-
-    if (command === 'clear') {
-        term.clear();
-        prompt();
-        return;
-    }
-
-    if (command.startsWith('ai ')) {
-        const promptText = command.substring(3);
-        await handleAI(promptText);
-        return;
-    }
-
-    // Treat simple terminal commands as JS for convenience
-     try {
-        const result = eval(command);
-        if (result !== undefined) {
-            term.writeln(`\x1b[36m< ${result}\x1b[0m`);
-        }
-    } catch (error) {
-        term.writeln(`\x1b[31mTerminal Error: ${error.message}\x1b[0m`);
-    }
-    prompt();
-}
-
-// Handles AI integration
-async function handleAI(promptText) {
-    try {
-        term.writeln('Accessing Neural Network...');
-        const result = await model.generateContent(promptText);
-        const response = await result.response;
-        const text = response.text();
-        
-        term.writeln(`\r\n\x1b[35mGemini:\x1b[0m`);
-        const lines = text.split('\n');
-        lines.forEach(line => term.writeln(line));
-    } catch (error) {
-        term.writeln(`\x1b[31mConnection Failed: ${error.message}\x1b[0m`);
-    }
-    prompt();
-}
