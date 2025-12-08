@@ -34,7 +34,7 @@ body {
 #run-button {
     padding: 10px;
     background-color: #2a3d3c; 
-    color: #39ff14;
+    color: #39ff14; /* Neon Green */
     border: none;
     cursor: pointer;
     font-size: 16px;
