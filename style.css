@@ -3,7 +3,7 @@ body {
     margin: 0;
     height: 100vh;
     font-family: 'Courier New', Courier, monospace;
-    display: flex; /* Use flex to manage the main container */
+    display: flex;
     padding: 10px;
     box-sizing: border-box;
 }
@@ -12,12 +12,12 @@ body {
     display: flex;
     width: 100%;
     height: 100%;
-    gap: 10px; /* Space between editor and terminal */
+    gap: 10px;
 }
 
 /* ------------------ EDITOR STYLES ------------------ */
 #editor-container {
-    flex: 1; /* Takes up half the space */
+    flex: 1; 
     display: flex;
     flex-direction: column;
     border: 1px solid #30363d;
@@ -26,14 +26,14 @@ body {
 }
 
 #editor {
-    flex-grow: 1; /* Allows the editor to fill the space */
-    min-height: 0; /* Fixes flexbox sizing issue */
-    background-color: #1e1e1e; /* VS Code dark background */
+    flex-grow: 1;
+    min-height: 0;
+    background-color: #1e1e1e;
 }
 
 #run-button {
     padding: 10px;
-    background-color: #2a3d3c; /* Dark teal/green */
+    background-color: #2a3d3c; 
     color: #39ff14;
     border: none;
     cursor: pointer;
@@ -49,7 +49,7 @@ body {
 
 /* ------------------ TERMINAL STYLES ------------------ */
 #terminal-container {
-    flex: 1; /* Takes up the other half */
+    flex: 1;
     display: flex;
     flex-direction: column;
     border: 1px solid #30363d;
