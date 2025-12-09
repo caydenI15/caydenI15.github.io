@@ -5,10 +5,9 @@ let model;
 let termInstance;
 
 // --- 1. Initialization ---
-// This function must be called first from script.js
 export function initAI(apiKey, term) {
-    if (!apiKey) {
-        term.writeln('\x1b[31mError: API Key is missing. Check your script.js file.\x1b[0m');
+    if (!apiKey || apiKey === 'PASTE_YOUR_GOOGLE_API_KEY_HERE') {
+        term.writeln('\x1b[31mError: API Key is missing or default. Check your script.js file.\x1b[0m');
         return;
     }
     termInstance = term;
@@ -26,7 +25,7 @@ export async function handleAIGeneral(promptText) {
         termInstance.writeln('Accessing Neural Network...');
         const result = await model.generateContent(promptText);
         const response = await result.response;
-        const text = response.split('\n');
+        const text = response.text().split('\n');
         
         termInstance.writeln(`\r\n\x1b[35mGemini:\x1b[0m`);
         text.forEach(line => termInstance.writeln(line));
