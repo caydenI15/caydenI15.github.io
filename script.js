@@ -2,7 +2,7 @@
 import { initAI, handleAIGeneral, handleAICode } from './aiHandler.js'; 
 
 // ⚠️ API KEY MUST BE HERE, CORRECTLY QUOTED!
-const SITE_API_KEY = "AIzaSyAgJpG8duJZlMqmsdE5SoYV7PmVob05_2U"; 
+const SITE_API_KEY = "PASTE_YOUR_GOOGLE_API_KEY_HERE"; 
 
 let editor; 
 const term = new Terminal({
@@ -14,17 +14,14 @@ const term = new Terminal({
 const fitAddon = new FitAddon.FitAddon();
 
 // --- 1. INITIALIZATION ---
-// Initialize Monaco Editor
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
 require(['vs/editor/editor.main'], function() {
     editor = monaco.editor.create(document.getElementById('editor'), {
         value: '// Write your JavaScript code here!\nconsole.log("Hello from the editor!");',
-        language: 'javascript',
-        theme: 'vs-dark', minimap: { enabled: false }, automaticLayout: true
+        language: 'javascript', theme: 'vs-dark', minimap: { enabled: false }, automaticLayout: true
     });
 });
 
-// Initialize Terminal
 term.loadAddon(fitAddon);
 term.open(document.getElementById('terminal'));
 fitAddon.fit();
@@ -33,7 +30,6 @@ window.addEventListener('resize', () => fitAddon.fit());
 // Initialize AI Handler (Passing the key and terminal instance)
 initAI(SITE_API_KEY, term);
 
-// Initial welcome and prompt setup
 term.writeln('System Initialized. Running on \x1b[1;36mGemini 2.5 Flash\x1b[0m.');
 term.writeln('Commands: \x1b[1;33mai "prompt"\x1b[0m or \x1b[1;33mhey ai "code"\x1b[0m');
 term.writeln('----------------------------------------');
@@ -41,9 +37,8 @@ prompt();
 
 let currentLine = '';
 
-// --- 2. COMMAND ROUTING ---
+// --- 2. COMMAND ROUTING & INPUT ---
 term.onData(e => {
-    // ... (Input handling for enter/backspace is the same) ...
     switch (e) {
         case '\r':
             term.write('\r\n');
@@ -67,19 +62,16 @@ async function processTerminalCommand(input) {
 
     if (command === 'clear') { term.clear(); prompt(); return; }
     
-    // Call the specific handler from aiHandler.js
     if (command.startsWith('hey ai ')) { 
         await handleAICode(command.substring(7));
         return;
     }
     
-    // Call the specific handler from aiHandler.js
     if (command.startsWith('ai ')) {
         await handleAIGeneral(command.substring(3));
         return;
     }
 
-    // Existing run code logic
      try {
         const result = eval(command);
         if (result !== undefined) { term.writeln(`\x1b[36m< ${result}\x1b[0m`); }
@@ -89,7 +81,7 @@ async function processTerminalCommand(input) {
     prompt();
 }
 
-// --- 3. RUN BUTTON LOGIC (Same as before) ---
+// --- 3. RUN BUTTON LOGIC ---
 const runButton = document.getElementById('run-button');
 runButton.addEventListener('click', runCode);
 
