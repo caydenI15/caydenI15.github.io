@@ -2,7 +2,7 @@
 import { initAI, handleAIGeneral, handleAICode } from './aiHandler.js'; 
 
 // ⚠️ API KEY MUST BE HERE, CORRECTLY QUOTED!
-const SITE_API_KEY = "AIzaSyAgJpG8duJZlMqmsdE5SoYV7PmVob05_2U"; 
+const SITE_API_KEY = "AIzaSyALyRbtMjiaWDbl1z7-G8xM5-hJFUcgxyE"; 
 
 let editor; 
 const term = new Terminal({
